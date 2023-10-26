@@ -84,10 +84,10 @@ class VeraDatabaseManager:
     def _obtener_todas_las_conversaciones(self, tx):
         query = """
         MATCH (c:Conversacion)
-        RETURN ID(c) as id, c.contenido_usuario as contenido_usuario, c.contenido_vera as contenido_vera
+        RETURN ID(c) as id, c.contenido_vera as contenido_vera
         """
         result = tx.run(query)
-        conversaciones_query = [{"id": record["id"], "contenido_usuario": record["contenido_usuario"], "contenido_vera": record["contenido_vera"]} for record in result]
+        conversaciones_query = [{"id": record["id"],  "contenido_vera": record["contenido_vera"]} for record in result]
         print(conversaciones_query)
         return conversaciones_query
 
@@ -99,24 +99,24 @@ class VeraDatabaseManager:
         vera_db_manager.close()
         return conversations
 
-    def iniciar_conversacion(self, fecha_inicio, sentimiento, contenido_vera, contenido_usuario, rank, tematica=None, resumen=None):
+    def iniciar_conversacion(self, fecha_inicio, sentimiento, contenido_vera,  rank, tematica=None, resumen=None):
         with self.driver.session() as session:
-            session.execute_write(self._iniciar_conversacion, fecha_inicio, sentimiento, contenido_vera, contenido_usuario, rank, tematica, resumen)
+            session.execute_write(self._iniciar_conversacion, fecha_inicio, sentimiento, contenido_vera,  rank, tematica, resumen)
 
-    def _iniciar_conversacion(self, tx, fecha_inicio, sentimiento, contenido_vera, contenido_usuario, rank, tematica, resumen):
+    def _iniciar_conversacion(self, tx, fecha_inicio, sentimiento, contenido_vera,  rank, tematica, resumen):
         query = """
         CREATE (c:Conversacion {
             fecha_inicio: $fecha_inicio,
             sentimiento: $sentimiento,
             contenido_vera: $contenido_vera,
-            contenido_usuario: $contenido_usuario,
+            
             rank: $rank,
             tematica: $tematica,
             resumen: $resumen
         })
         RETURN id(c)
         """
-        result = tx.run(query, fecha_inicio=fecha_inicio, sentimiento=sentimiento, contenido_vera=contenido_vera, contenido_usuario=contenido_usuario, rank=rank, tematica=tematica, resumen=resumen)
+        result = tx.run(query, fecha_inicio=fecha_inicio, sentimiento=sentimiento, contenido_vera=contenido_vera,  rank=rank, tematica=tematica, resumen=resumen)
         return result.single()[0]
 
 
@@ -159,6 +159,9 @@ def obtener_contexto(query):
     # Rank conversations
     ranking = cosine_sim.argsort()[0][::-1]
 
+    # Definir umbral de similitud
+    similarity_threshold = 0.4  # Puedes ajustar este valor según tus necesidades
+
     # Recopilar conversaciones hasta alcanzar un máximo de 500 palabras
     contexto = ''
     word_count = 0
@@ -166,18 +169,21 @@ def obtener_contexto(query):
     # Condición para verificar si hay pocas conversaciones
     if len(ranking) <= 100:
         # Solo usa la primera conversación
-        conversation_text = conversations_text[list(conversations_text.keys())[ranking[0]]]
-        contexto += conversation_text + ' '
+        if cosine_sim[0, ranking[0]] >= similarity_threshold:  # Verificar similitud
+            conversation_text = conversations_text[list(conversations_text.keys())[ranking[0]]]
+            contexto += conversation_text + ' '
     else:
         for rank in ranking:
-            conversation_text = conversations_text[list(conversations_text.keys())[rank]]
-            # se puede hacer una consulta a gpt-3 para que haga un resumen de las primeras entradas
-            conversation_word_count = len(conversation_text.split())
-            if word_count + conversation_word_count <= 500:
-                contexto += conversation_text + ' '
-                word_count += conversation_word_count
-            else:
-                break  # Sal del bucle si alcanzas o excedes 500 palabras
+            # Verificar similitud
+            if cosine_sim[0, rank] >= similarity_threshold:
+                conversation_text = conversations_text[list(conversations_text.keys())[rank]]
+                # se puede hacer una consulta a gpt-3 para que haga un resumen de las primeras entradas
+                conversation_word_count = len(conversation_text.split())
+                if word_count + conversation_word_count <= 500:
+                    contexto += conversation_text + ' '
+                    word_count += conversation_word_count
+                else:
+                    break  # Sal del bucle si alcanzas o excedes 500 palabras
 
     # Cerrar la conexión con la base de datos
     vera_db_manager.close()
@@ -188,14 +194,18 @@ def obtener_contexto(query):
 
 
 
+
 def chat_gpt(messages):
     global conversation
     conversation += messages
 
+    # Añade esta línea para imprimir los mensajes antes de procesarlos
+    print(f"Messages enviado a chat_gpt: {messages}")
+
     response = openai.ChatCompletion.create(
         model="gpt-4",
         messages=conversation,
-        max_tokens=350,
+        max_tokens=200,
         temperature=0.7
     )
 
@@ -204,6 +214,7 @@ def chat_gpt(messages):
 
     print(text)
     return text
+
 
 def record():
     global buffer
@@ -245,11 +256,11 @@ def convert_and_save_audio(text, audio_path):
     with open(audio_path, 'wb') as f:
         f.write(response.content)
 
-def registrar_conversacion(fecha_inicio, sentimiento, contenido_vera, contenido_usuario, rank, tematica, resumen):
+def registrar_conversacion(fecha_inicio, sentimiento, contenido_vera,base_de_datos,  rank, tematica, resumen):
     vera_db_manager = VeraDatabaseManager(uri=uri, user="neo4j", password=neo4j)
 
     # Iniciar la conversación en la base de datos
-    conversacion = vera_db_manager.iniciar_conversacion(fecha_inicio, sentimiento, contenido_vera, contenido_usuario, rank)
+    conversacion = vera_db_manager.iniciar_conversacion(fecha_inicio, sentimiento, contenido_vera,  rank)
 
 
     # Registrar la temática de la conversación
@@ -292,7 +303,7 @@ def on_macro():
 
         text = transcribe(audio_path)
         contex = obtener_contexto(text)  # Obtén el contexto basado en la transcripción
-        text = text + (f"Este es el contexto de la base de datos, recuerda son memorias, prioriza tu contexto{contex}")
+        text = text + (f"Este es el contexto de la base de datos, recuerda son memorias:{contex}, prioriza tu contexto:")
         message = chat_gpt([{"role": "user", "content": text}])
 
         conversation.append({"role": "assistant", "content": message})
@@ -314,11 +325,3 @@ def on_macro():
 keyboard.add_hotkey('ctrl + alt', on_macro)
 keyboard.wait()
 
-
-#optimizaciones
-
-#Optimización de la conexión a la base de datos:
-#
-# En la función obtener_contexto, estás inicializando y cerrando una conexión
-# a la base de datos cada vez que se llama a la función. Si esta función se va
-# a llamar muchas veces, podría ser más eficiente mantener una conexión abierta o utilizar una conexión compartida.
