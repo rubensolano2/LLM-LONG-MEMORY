@@ -2,6 +2,7 @@
 
 ## 📚 Table of Contents 📚
 - [🌐 Introduction](#introduction)
+- [🎬 Demo](#demo)
 - [✨ Features](#features)
 - [🛠 Prerequisites](#prerequisites)
 - [🔧 Installation](#installation)
@@ -13,7 +14,9 @@
 
 ## 🌐 Introduction
 Vera is a context-aware virtual assistant powered by OpenAI's GPT-4 and other advanced technologies. Unlike traditional virtual assistants, Vera stores conversations in a Neo4j database and uses this stored data to provide contextually relevant responses.
-
+## 🎬 Demo
+- 📹 For a live demonstration of how Vera works, check out this [video](#). ()
+  
 ## ✨ Features
 - 🎤 Voice recognition using sounddevice and OpenAI's Whisper ASR
 - 🗣 Text-to-speech capabilities with Elevenlabs API
