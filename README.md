@@ -31,7 +31,8 @@ Currently, the code faces a challenge concerning information consumption. An exc
 
 4. **Testing and Validation**: Perform tests to validate that the implemented optimizations have resolved the issue without introducing new problems.
 
-Any contribution to help resolve this issue is very welcome. If you have any suggestions or solutions, feel free to open a [new Issue](https://github.com/your-repo/your-project/issues) or submit a [Pull Request](https://github.com/your-repo/your-project/pulls).
+Any contribution to help resolve this issue is very welcome. If you have any suggestions or solutions, feel free to open a [new Issue](https://github.com/rubensolano2/LLM-LONG-MEMORY/issues) or submit a [Pull Request](https://github.com/rubensolano2/LLM-LONG-MEMORY/pulls).
+
 
 
 ## 🎬 Demo
