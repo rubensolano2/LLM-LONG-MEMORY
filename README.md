@@ -39,7 +39,7 @@ To initiate Vera, use the hotkey `Ctrl + Alt`. Speak into the microphone, and Ve
 
 ## 🔄 Memory Initialization
 - 🕒 Use Vera for a period of time to build up memories for context-aware interactions.
-- 🗂 Alternatively, you can connect Vera to an existing dataset to prepopulate her memory.
+- 🗂 Alternatively, you can connect Vera to an existing database to prepopulate her memory.
 
 ## 💻 Technologies Used
 - 🎤 OpenAI's Whisper for ASR
