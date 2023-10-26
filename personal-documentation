@@ -1,0 +1,27 @@
+Apuntes del proyecto:
+
+1. Corazón del modelo:
+
+ explicación de la fórmula BM25 con un formato más simple:
+
+La función de puntuación BM25 calcula la relevancia de un documento D para una consulta Q como la suma de los siguientes términos para cada palabra en la consulta:
+
+IDF(qi):
+
+La Frecuencia Inversa de Documento (IDF) de la palabra qi, que es una medida de qué tan informativa es la palabra en el corpus completo. Palabras que aparecen en muchos documentos tendrán un IDF más bajo.
+TF(qi, D):
+
+La Frecuencia de Término (TF) de la palabra qi en el documento D, que es una medida de qué tan a menudo aparece la palabra en el documento.
+k1 y b:
+
+Son parámetros que puedes ajustar para cambiar cómo la función de puntuación maneja la Frecuencia de Término y la longitud del documento.
+La parte central de la fórmula BM25 para una palabra qi en un documento D es la siguiente:
+
+Multiplica la IDF de la palabra qi por la siguiente expresión:
+Numerador: TF(qi, D) * (k1 + 1)
+Denominador: TF(qi, D) + k1 * (1 - b + b * (longitud de D / longitud promedio de los documentos))
+En palabras, estás multiplicando la importancia de la palabra (IDF) por una versión ajustada de la frecuencia de la palabra en el documento. La parte ajustada de la frecuencia de la palabra en el documento es una fracción 
+donde el numerador aumenta con la frecuencia de la palabra en el documento, pero el denominador también aumenta, lo que reduce el impacto de las palabras muy frecuentes. También hay un ajuste basado en la longitud del documento
+en comparación con la longitud promedio de los documentos en el corpus.
+
+Luego, para obtener la puntuación total de BM25 para un documento D dado una consulta Q, sumas estos términos para cada palabra en la consulta. Esto te da una puntuación que puedes usar para clasificar los documentos por relevancia para la consulta.
