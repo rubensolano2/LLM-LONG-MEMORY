@@ -9,6 +9,8 @@ from claves import neo4j, Vera, uri
 from neo4j import GraphDatabase
 import pygame
 import time
+from rank_bm25 import BM25Okapi
+from collections import defaultdict
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from collections import defaultdict
@@ -141,49 +143,30 @@ def obtener_contexto(query):
         vera_db_manager.close()
         return ''
 
-    # Initialize TF-IDF Vectorizer and fit-transform the conversations
-    vectorizer = TfidfVectorizer()
-    try:
-        tfidf_matrix = vectorizer.fit_transform(list(conversations_text.values()))
-    except ValueError as e:
-        print(f"Error: {e}")
-        vera_db_manager.close()
-        return ''
+    # Convertir el texto de las conversaciones a una lista de documentos
+    corpus = list(conversations_text.values())
 
-    # Query
-    query_vector = vectorizer.transform([query])
+    # Inicializar el objeto BM25
+    bm25 = BM25Okapi(corpus)
 
-    # Calculate cosine similarity
-    cosine_sim = cosine_similarity(query_vector, tfidf_matrix)
+    # Obtener los scores de BM25 para la consulta
+    scores = bm25.get_scores(query.split())
 
-    # Rank conversations
-    ranking = cosine_sim.argsort()[0][::-1]
-
-    # Definir umbral de similitud
-    similarity_threshold = 0.38  # Puedes ajustar este valor según tus necesidades
+    # Ordenar los índices de los documentos en función de los scores
+    ranking = [i for i, score in sorted(enumerate(scores), key=lambda x: x[1], reverse=True)]
 
     # Recopilar conversaciones hasta alcanzar un máximo de 500 palabras
     contexto = ''
     word_count = 0
 
-    # Condición para verificar si hay pocas conversaciones
-    if len(ranking) <= 100:
-        # Solo usa la primera conversación
-        if cosine_sim[0, ranking[0]] >= similarity_threshold:  # Verificar similitud
-            conversation_text = conversations_text[list(conversations_text.keys())[ranking[0]]]
+    for rank in ranking:
+        conversation_text = conversations_text[list(conversations_text.keys())[rank]]
+        conversation_word_count = len(conversation_text.split())
+        if word_count + conversation_word_count <= 500:
             contexto += conversation_text + ' '
-    else:
-        for rank in ranking:
-            # Verificar similitud
-            if cosine_sim[0, rank] >= similarity_threshold:
-                conversation_text = conversations_text[list(conversations_text.keys())[rank]]
-                # se puede hacer una consulta a gpt-3 para que haga un resumen de las primeras entradas
-                conversation_word_count = len(conversation_text.split())
-                if word_count + conversation_word_count <= 500:
-                    contexto += conversation_text + ' '
-                    word_count += conversation_word_count
-                else:
-                    break  # Sal del bucle si alcanzas o excedes 500 palabras
+            word_count += conversation_word_count
+        else:
+            break  # Sal del bucle si alcanzas o excedes 500 palabras
 
     # Cerrar la conexión con la base de datos
     vera_db_manager.close()
@@ -206,7 +189,7 @@ def chat_gpt(messages):
         model="gpt-4",
         messages=conversation,
         max_tokens=200,
-        temperature=0.7
+        temperature=0.55
     )
 
     response_content = response["choices"][0]
@@ -324,4 +307,5 @@ def on_macro():
 
 keyboard.add_hotkey('ctrl + alt', on_macro)
 keyboard.wait()
+
 
