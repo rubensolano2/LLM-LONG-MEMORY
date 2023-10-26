@@ -160,7 +160,7 @@ def obtener_contexto(query):
     ranking = cosine_sim.argsort()[0][::-1]
 
     # Definir umbral de similitud
-    similarity_threshold = 0.4  # Puedes ajustar este valor según tus necesidades
+    similarity_threshold = 0.2  # Puedes ajustar este valor según tus necesidades
 
     # Recopilar conversaciones hasta alcanzar un máximo de 500 palabras
     contexto = ''
