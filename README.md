@@ -14,6 +14,26 @@
 
 ## 🌐 Introduction
 Vera is a context-aware virtual assistant powered by OpenAI's GPT-4 and other advanced technologies. Unlike traditional virtual assistants, Vera stores conversations in a Neo4j database and uses this stored data to provide contextually relevant responses.
+
+## 🐞 Problems to Solve
+
+### Excessive Information Consumption
+
+Currently, the code faces a challenge concerning information consumption. An excessive amount of information is being gathered during execution, which may be affecting the efficiency and performance of the program. The primary task is to review and optimize the use of variables and context handling throughout the code to identify and address context accumulation.
+
+#### Steps for resolution:
+
+1. **Variable Review**: Conduct a thorough review of the variables used in the code to understand their role and how they are contributing to information consumption.
+   
+2. **Context Handling Analysis**: Analyze how context is being handled throughout the code, and how this may be contributing to excessive information consumption.
+
+3. **Optimization**: Implement necessary optimizations to reduce information consumption and improve code efficiency.
+
+4. **Testing and Validation**: Perform tests to validate that the implemented optimizations have resolved the issue without introducing new problems.
+
+Any contribution to help resolve this issue is very welcome. If you have any suggestions or solutions, feel free to open a [new Issue](https://github.com/your-repo/your-project/issues) or submit a [Pull Request](https://github.com/your-repo/your-project/pulls).
+
+
 ## 🎬 Demo
 - 📹 For a live demonstration of how Vera works, check out.
 
