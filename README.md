@@ -1,16 +1,17 @@
-# 🌟 Vera - Context-Aware Virtual Assistant 🌟
-
 ## 📚 Table of Contents 📚
-- [🌐 Introduction](#introduction)
-- [🎬 Demo](#demo)
-- [✨ Features](#features)
-- [🛠 Prerequisites](#prerequisites)
-- [🔧 Installation](#installation)
-- [🎯 Usage](#usage)
-- [🔄 Memory Initialization](#memory-initialization)
-- [💻 Technologies Used](#technologies-used)
-- [📊 Database Schema](#database-schema)
-- [🚀 Optimizations](#optimizations)
+- [🌐 Introduction](#-introduction)
+- [🎬 Demo](#-demo)
+- [✨ Features](#-features)
+- [🛠 Prerequisites](#-prerequisites)
+- [🔧 Installation](#-installation)
+- [🎯 Usage](#-usage)
+- [🔄 Memory Initialization](#-memory-initialization)
+- [💻 Technologies Used](#-technologies-used)
+- [📊 Database Schema](#-database-schema)
+- [🐞 Problems to Solve](#-problems-to-solve)
+- [🚀 Optimizations](#-optimizations)
+- [🚀 Anticipated Updates for the Project](#-anticipated-updates-for-the-project)
+
 
 ## 🌐 Introduction
 Vera is a context-aware virtual assistant powered by OpenAI's GPT-4 and other advanced technologies. Unlike traditional virtual assistants, Vera stores conversations in a Neo4j database and uses this stored data to provide contextually relevant responses.
