@@ -9,22 +9,22 @@ class VeraDatabaseManager:
     def close(self):
         self.driver.close()
 
-    def iniciar_conversacion(self, fecha, sentimiento, texto_vera, texto_usuario, rank):
+    def iniciar_conversacion(self, fecha, sentimiento, texto_vera,  rank):
         with self.driver.session() as session:
-            return session.execute_write(self._iniciar_conversacion, fecha, sentimiento, texto_vera, texto_usuario, rank)
+            return session.execute_write(self._iniciar_conversacion, fecha, sentimiento, texto_vera,  rank)
 
-    def _iniciar_conversacion(self, tx, fecha, sentimiento, texto_vera, texto_usuario, rank):
+    def _iniciar_conversacion(self, tx, fecha, sentimiento, texto_vera,  rank):
         query = """
         CREATE (c:Conversacion {
             fecha: $fecha,
             sentimiento: $sentimiento,
             vera: $texto_vera,
-            usuario: $texto_usuario,
+            
             rank: $rank
         })
         RETURN id(c) as element_id
         """
-        result = tx.run(query, fecha=fecha, sentimiento=sentimiento, texto_vera=texto_vera, texto_usuario=texto_usuario, rank=rank)
+        result = tx.run(query, fecha=fecha, sentimiento=sentimiento, texto_vera=texto_vera,  rank=rank)
         return result.single()['element_id']
 
     def agregar_tematica(self, conversacion_element_id, tematica):
