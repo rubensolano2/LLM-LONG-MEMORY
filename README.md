@@ -16,6 +16,28 @@
 Vera is a context-aware virtual assistant powered by OpenAI's GPT-4 and other advanced technologies. Unlike traditional virtual assistants, Vera stores conversations in a Neo4j database and uses this stored data to provide contextually relevant responses.
 ## 🎬 Demo
 - 📹 For a live demonstration of how Vera works, check out this [video](#). ()
+
+---
+# 🚀 Anticipated Updates for the Project
+
+Greetings, it's a pleasure to share the innovative improvements on the horizon for my project. These updates are meticulously designed to optimize the code and strengthen interaction. They are detailed as follows:
+
+## 1. 🕰️ Incorporation of Temporal Awareness in Conversations
+There are plans to integrate a temporal awareness functionality, allowing for more precise contextualization in responses. For instance, when inquiring "What time is it?" at 2 p.m., the answer will be "It's 2 p.m." instead of "I don't know." This improvement is a significant step towards more intuitive and coherent interactions.
+
+## 2. 📄 Ability to Create Summaries
+The ability to introduce sibling nodes in the database will be included to add a summary that can optimize data search.
+
+## 3. 💡 Generation of New Ideas from Summaries
+With this feature, new ideas can be conceived from the summaries of our conversations. This function acts as a breeding ground for inspiration and the exploration of new possibilities based on previous discussions, introducing relevant ideas as new information in the database. This process will be carried out by GPT-4 in parallel to filter out irrelevant ideas.
+
+## 4. 🗺️ Thematization of Conversations
+The functionality of thematizing conversations will be introduced, allowing to maintain a clear focus and follow a coherent thematic line throughout the interactions. This improvement will help keep our discussions aligned and create large areas of knowledge within the database itself. The idea is that nodes belonging to the same theme can merge and link together, being prioritized in the information search.
+
+These refined improvements represent exciting steps towards expanding the project's capabilities. Thank you for contributing to the evolution of this project! 😄
+
+---
+
   
 ## ✨ Features
 - 🎤 Voice recognition using sounddevice and OpenAI's Whisper ASR
