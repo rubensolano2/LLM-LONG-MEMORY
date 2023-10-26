@@ -1,6 +1,8 @@
 ## 📚 Table of Contents 📚
 - [🌐 Introduction](#-introduction)
+- [🐞 Problems to Solve](#-problems-to-solve)
 - [🎬 Demo](#-demo)
+- [🚀 Anticipated Updates for the Project](#-anticipated-updates-for-the-project)
 - [✨ Features](#-features)
 - [🛠 Prerequisites](#-prerequisites)
 - [🔧 Installation](#-installation)
@@ -8,9 +10,7 @@
 - [🔄 Memory Initialization](#-memory-initialization)
 - [💻 Technologies Used](#-technologies-used)
 - [📊 Database Schema](#-database-schema)
-- [🐞 Problems to Solve](#-problems-to-solve)
 - [🚀 Optimizations](#-optimizations)
-- [🚀 Anticipated Updates for the Project](#-anticipated-updates-for-the-project)
 
 
 ## 🌐 Introduction
