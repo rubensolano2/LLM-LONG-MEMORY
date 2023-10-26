@@ -6,6 +6,7 @@
 - [🛠 Prerequisites](#prerequisites)
 - [🔧 Installation](#installation)
 - [🎯 Usage](#usage)
+- [🔄 Memory Initialization](#memory-initialization)
 - [💻 Technologies Used](#technologies-used)
 - [📊 Database Schema](#database-schema)
 - [🚀 Optimizations](#optimizations)
@@ -35,6 +36,10 @@ Vera is a context-aware virtual assistant powered by OpenAI's GPT-4 and other ad
 
 ## 🎯 Usage
 To initiate Vera, use the hotkey `Ctrl + Alt`. Speak into the microphone, and Vera will respond contextually based on past conversations and the current query.
+
+## 🔄 Memory Initialization
+- 🕒 Use Vera for a period of time to build up memories for context-aware interactions.
+- 🗂 Alternatively, you can connect Vera to an existing dataset to prepopulate her memory.
 
 ## 💻 Technologies Used
 - 🎤 OpenAI's Whisper for ASR
