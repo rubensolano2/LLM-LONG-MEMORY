@@ -21,7 +21,7 @@ from math import ceil
 
 openai.api_key = Openai_clave
 
-voice_id ="Vera"
+
 audio_counter = 0
 audio_queue = []
 
