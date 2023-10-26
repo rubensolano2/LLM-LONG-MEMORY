@@ -16,7 +16,7 @@
 Vera is a context-aware virtual assistant powered by OpenAI's GPT-4 and other advanced technologies. Unlike traditional virtual assistants, Vera stores conversations in a Neo4j database and uses this stored data to provide contextually relevant responses.
 ## 🎬 Demo
 - 📹 For a live demonstration of how Vera works, check out.
-Listen the audio in SoundCloud](https://soundcloud.com/ruben-solano-cea-369408599/vera-1?si=30c4537de6964ddc90cc7cb6b63af225&utm_source=clipboard&utm_medium=text&utm_campaign=social_sharing)
+
 
 
 
