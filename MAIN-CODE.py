@@ -20,6 +20,7 @@ from memoria import vera_db_manager
 import os
 from claves import Openai_clave, Elevenlabs_clave
 from math import ceil
+from sentence_transformers import SentenceTransformer, util
 
 openai.api_key = Openai_clave
 
@@ -146,19 +147,33 @@ def obtener_contexto(query):
     # Convertir el texto de las conversaciones a una lista de documentos
     corpus = list(conversations_text.values())
 
-    # Inicializar el objeto BM25
-    bm25 = BM25Okapi(corpus)
+    # Inicializar el modelo BERT
+    model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
 
-    # Obtener los scores de BM25 para la consulta
-    scores = bm25.get_scores(query.split())
+    # Obtener embeddings para la consulta y el corpus
+    query_embedding = model.encode(query, convert_to_tensor=True)
+    corpus_embeddings = model.encode(corpus, convert_to_tensor=True)
 
-    # Ordenar los índices de los documentos en función de los scores
-    ranking = [i for i, score in sorted(enumerate(scores), key=lambda x: x[1], reverse=True)]
+    # Calcular las similitudes coseno
+    similarities = util.pytorch_cos_sim(query_embedding, corpus_embeddings)[0]
+
+    # Convertir las similitudes a una lista y obtener el ranking
+    similarities = similarities.cpu().numpy()
+
+    ranking = [i for i, score in sorted(enumerate(similarities), key=lambda x: x[1], reverse=True)]
+    print(similarities[ranking[0]])
+    # Definir umbral de similitud
+    similarity_threshold = 0.55  # Puedes ajustar este valor según tus necesidades
+
+    # Verificar la similitud del nodo mejor clasificado
+    if similarities[ranking[0]] < similarity_threshold:
+        print("No se encontró una conversación relevante.")
+        vera_db_manager.close()
+        return '"No se encontró un recurdo, será un nuevo recuerdo entonces."'
 
     # Recopilar conversaciones hasta alcanzar un máximo de 500 palabras
     contexto = ''
     word_count = 0
-
     for rank in ranking:
         conversation_text = conversations_text[list(conversations_text.keys())[rank]]
         conversation_word_count = len(conversation_text.split())
@@ -172,10 +187,6 @@ def obtener_contexto(query):
     vera_db_manager.close()
 
     return contexto.strip()  # Eliminar espacios extra
-
-
-
-
 
 
 def chat_gpt(messages):
