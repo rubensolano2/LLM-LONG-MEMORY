@@ -13,26 +13,26 @@
 - [🚀 Optimizations](#-optimizations)
 
 
-## 🌐 Introduction
+## 🌐 Introduction- project under construction
 Vera is a context-aware virtual assistant powered by OpenAI's GPT-4 and other advanced technologies. Unlike traditional virtual assistants, Vera stores conversations in a Neo4j database and uses this stored data to provide contextually relevant responses.
 
 ## 🐞 Problems to Solve
 
-### Excessive Information Consumption
+### Model Similarity Matching Failure
 
-Currently, the code faces a challenge concerning information consumption. An excessive amount of information is being gathered during execution, which may be affecting the efficiency and performance of the program. The primary task is to review and optimize the use of variables and context handling throughout the code to identify and address context accumulation.
+The model currently faces a challenge in accurately identifying similarity between nodes and the query, which is critical for providing contextually relevant responses. Efforts are ongoing to address this issue and improve the model's accuracy in similarity matching.
 
 #### Steps for resolution:
 
-1. **Variable Review**: Conduct a thorough review of the variables used in the code to understand their role and how they are contributing to information consumption.
+1. **Model Evaluation**: Conduct a thorough evaluation of the model to understand the root cause of the similarity matching failure.
    
-2. **Context Handling Analysis**: Analyze how context is being handled throughout the code, and how this may be contributing to excessive information consumption.
+2. **Model Improvement**: Explore and implement alternative models or optimization techniques to enhance similarity matching accuracy.
 
-3. **Optimization**: Implement necessary optimizations to reduce information consumption and improve code efficiency.
+3. **Testing and Validation**: Perform extensive testing to validate the improvements and ensure that the similarity matching issue has been resolved.
 
-4. **Testing and Validation**: Perform tests to validate that the implemented optimizations have resolved the issue without introducing new problems.
+4. **Community Contributions**: Encourage community contributions by providing detailed information about the issue and inviting suggestions or solutions through [Issues](https://github.com/rubensolano2/LLM-LONG-MEMORY/issues) or [Pull Requests](https://github.com/rubensolano2/LLM-LONG-MEMORY/pulls).
 
-Any contribution to help resolve this issue is very welcome. If you have any suggestions or solutions, feel free to open a [new Issue](https://github.com/rubensolano2/LLM-LONG-MEMORY/issues) or submit a [Pull Request](https://github.com/rubensolano2/LLM-LONG-MEMORY/pulls).
+Any contribution to help resolve these issues is very welcome. If you have any suggestions or solutions, feel free to open a [new Issue](https://github.com/rubensolano2/LLM-LONG-MEMORY/issues) or submit a [Pull Request](https://github.com/rubensolano2/LLM-LONG-MEMORY/pulls).
 
 
 
