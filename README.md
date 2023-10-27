@@ -98,7 +98,8 @@ These refined improvements represent exciting steps towards expanding the projec
 4. Run the main script  
 
 ## 🎯 Usage
-To initiate Vera, use the hotkey `Ctrl + Alt`. Speak into the microphone, and Vera will respond contextually based on past conversations and the current query.
+To initiate Vera run the code wait like 6 seconds and use the hotkey `Ctrl + Alt`. Speak into the microphone, and Vera will respond contextually based on past conversations and the current query.
+You will be able to see in the terminal some prints with the processing of your audio, nodes, and responses.
 
 ## 🔄 Memory Initialization
 - 🕒 Use Vera for a period of time to build up memories for context-aware interactions.
