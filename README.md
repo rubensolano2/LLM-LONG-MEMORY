@@ -85,7 +85,7 @@ These refined improvements represent exciting steps towards expanding the projec
 ## 🔧 Installation
 1️⃣ Clone the repository  
 2️⃣ Install dependencies  
-3️⃣ Create in your directory the `claves.py` file with your Neo4j, ElevenLabs and OpenAI API keys  (!!!!!!So, important¡¡¡¡¡)
+3️⃣ Create in your directory the `claves.py` file with your Neo4j, ElevenLabs and OpenAI API keys  (!!!So, important¡¡¡)
 4️⃣ Run the main script  
 
 ## 🎯 Usage
