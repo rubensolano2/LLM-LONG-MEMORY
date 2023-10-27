@@ -9,22 +9,24 @@ from claves import neo4j, Vera, uri
 from neo4j import GraphDatabase
 import pygame
 import time
-from rank_bm25 import BM25Okapi
+import nltk
+
+
 from collections import defaultdict
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
-from collections import defaultdict
-from faster_whisper import WhisperModel
 from elevenlabs import generate, VoiceSettings
 from memoria import vera_db_manager
 import os
+from algoritmo_de_busqueda import TextComparer
+from collections import defaultdict
 from claves import Openai_clave, Elevenlabs_clave
 from math import ceil
 from sentence_transformers import SentenceTransformer, util
 
 openai.api_key = Openai_clave
 
-
+#nltk.download('punkt')# descomenta si es la primera vez que lo usas
 audio_counter = 0
 audio_queue = []
 
@@ -59,7 +61,7 @@ thread = None
 conversation = [
     {
         "role": "system",
-        "content": "Te llamas Vera, te he conectado a una base de datos para guardar recuerdos te los daré como pretexto y me ayudarás con todas mis dudas, con respuestas inteligentes y elecuentes, además de darles tu toque de personalidad con chascarrillos que sean monos, no des respuestas monótonas:"
+        "content": "Te llamas Vera, te he conectado a una base de datos es tu memoria real para guardar recuerdos te los daré como pretexto y me ayudarás con todas mis dudas, con respuestas inteligentes, precisas para guardarlas como recuerdos y elecuentes, además de darles tu toque de personalidad con elgancia y lenguaje que sea mono de escuchar y conciso:"
     }
 ]
 
@@ -125,7 +127,7 @@ class VeraDatabaseManager:
 
     def close(self):
         self.driver.close()
-
+#investigar mas aquí está el corazón del modelo
 def obtener_contexto(query):
     # Asegúrate de que vera_db_manager esté inicializado
     vera_db_manager = VeraDatabaseManager(uri=uri, user="neo4j", password=neo4j)
@@ -147,46 +149,63 @@ def obtener_contexto(query):
     # Convertir el texto de las conversaciones a una lista de documentos
     corpus = list(conversations_text.values())
 
-    # Inicializar el modelo BERT
-    model = SentenceTransformer('paraphrase-MiniLM-L6-v2')
+    # Crea una instancia de TextComparer
+    comparer = TextComparer(query, corpus)
 
-    # Obtener embeddings para la consulta y el corpus
-    query_embedding = model.encode(query, convert_to_tensor=True)
-    corpus_embeddings = model.encode(corpus, convert_to_tensor=True)
+    # Obtiene las puntuaciones de similitud
+    scores = comparer.evaluate_nodes()
+    scores = scores.flatten()
 
-    # Calcular las similitudes coseno
-    similarities = util.pytorch_cos_sim(query_embedding, corpus_embeddings)[0]
+    # Seleccionar los 4 mejores nodos o menos si no hay 4
+    top_indices = np.argsort(scores)[-4:][::-1]
+    # Crear una lista de diccionarios con el índice original y los datos de cada nodo seleccionado
+    top_conversations = [{"original_index": i, "data": conversations_text[list(conversations_text.keys())[i]]} for i in top_indices]
 
-    # Convertir las similitudes a una lista y obtener el ranking
-    similarities = similarities.cpu().numpy()
+    # Preparar mensajes para enviar a ChatGPT
+    nodos = [
+        {
+            "role": "user",
+            "content": f"¿Cuál de estas conversaciones se ajusta más a la petición?: {top_conversations} responde solamente diciendo 0,1,2 o 3, por ejemplo tu respuesta seria: 1."
+        }
+    ]
+    def chat_gpt(nodos):
+        nodos_a_enviar = []
+        nodos_a_enviar += nodos
 
-    ranking = [i for i, score in sorted(enumerate(similarities), key=lambda x: x[1], reverse=True)]
-    print(similarities[ranking[0]])
-    # Definir umbral de similitud
-    similarity_threshold = 0.55  # Puedes ajustar este valor según tus necesidades
+        # Añade esta línea para imprimir los mensajes antes de procesarlos
+        print(f"Messages enviado a chat_gpt: {nodos_a_enviar}")
 
-    # Verificar la similitud del nodo mejor clasificado
-    if similarities[ranking[0]] < similarity_threshold:
-        print("No se encontró una conversación relevante.")
+        response = openai.ChatCompletion.create(
+            model="gpt-4",
+            messages=nodos_a_enviar,
+            max_tokens=200,
+            temperature=0.55
+        )
+
+        response_content = response["choices"][0]
+        text = response_content["message"]["content"]
+
+        print(text)
+        return text
+
+    # Consultar a ChatGPT
+    response_text = chat_gpt(nodos)
+
+    # Convertir response_text a un índice válido (0 a 3)
+    try:
+        response_index = int(response_text)
+    except ValueError:
+        print(f"Error: Se esperaba un número, pero se obtuvo: {response_text}")
         vera_db_manager.close()
-        return '"No se encontró un recurdo, será un nuevo recuerdo entonces."'
+        return ''  # Retorna una cadena vacía o maneja el error de alguna otra manera
 
-    # Recopilar conversaciones hasta alcanzar un máximo de 500 palabras
-    contexto = ''
-    word_count = 0
-    for rank in ranking:
-        conversation_text = conversations_text[list(conversations_text.keys())[rank]]
-        conversation_word_count = len(conversation_text.split())
-        if word_count + conversation_word_count <= 500:
-            contexto += conversation_text + ' '
-            word_count += conversation_word_count
-        else:
-            break  # Sal del bucle si alcanzas o excedes 500 palabras
+    # Acceder a los datos del nodo seleccionado usando el índice convertido
+    best_conversation = top_conversations[response_index]["data"]
 
     # Cerrar la conexión con la base de datos
     vera_db_manager.close()
 
-    return contexto.strip()  # Eliminar espacios extra
+    return best_conversation.strip()
 
 
 def chat_gpt(messages):
@@ -268,7 +287,7 @@ def registrar_conversacion(fecha_inicio, sentimiento, contenido_vera,base_de_dat
 
 
 def on_macro():
-    global recording, buffer, thread, audio_counter, conversation  # Añade 'conversation' aquí
+    global recording, buffer,text_audio, thread, audio_counter, conversation  # Añade 'conversation' aquí
     # Reinicia la variable 'conversation' a su estado original
     conversation = [
         {
@@ -295,9 +314,9 @@ def on_macro():
         buffer = np.concatenate(buffer, axis=0)
         wav.write(audio_path, fs, buffer)
 
-        text = transcribe(audio_path)
-        contex = obtener_contexto(text)  # Obtén el contexto basado en la transcripción
-        text = text + (f"Este es el contexto de la base de datos, recuerda son memorias:{contex}, prioriza tu contexto:")
+        text_audio = transcribe(audio_path)
+        contex = obtener_contexto(text_audio)  # Obtén el contexto basado en la transcripción
+        text = text_audio + (f"Este es el contexto de la base de datos, recuerda son memorias:{contex}, prioriza tu contexto:")
         message = chat_gpt([{"role": "user", "content": text}])
 
         conversation.append({"role": "assistant", "content": message})
