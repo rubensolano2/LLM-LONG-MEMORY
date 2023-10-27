@@ -38,12 +38,12 @@ Any contribution to help resolve these issues is very welcome. If you have any s
 
 ## 🎬 Demo
 - 📹 For a live demonstration of how Vera works, check out.
+
+- DEMO 1: In this demo, the model was informed about the improvements that were going to be made in the future, and this was its response:
 [![Reproducir Audio](https://img.shields.io/badge/Reproducir-Audio-blue)](https://drive.google.com/file/d/1iYRN9jrnDqcnpMa_fw-wv3eIrUS_jwHK/view?usp=sharing)
 
-
-
-
-
+- Demo 2: In this demo, the model was disconnected, restarted, and then asked about the improvements from a previous conversation:
+[![Reproducir Audio](https://img.shields.io/badge/Reproducir-Audio-blue)](https://drive.google.com/file/d/1iZzSjNRlOgSlf5WqzVPeFRJczSt3-Amx/view?usp=sharing)
 
 
 ---
