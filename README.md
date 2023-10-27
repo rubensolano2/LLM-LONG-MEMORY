@@ -38,6 +38,8 @@ Any contribution to help resolve these issues is very welcome. If you have any s
 
 ## 🎬 Demo
 - 📹 For a live demonstration of how Vera works, check out.
+[![Reproducir Audio](https://img.shields.io/badge/Reproducir-Audio-blue)](https://drive.google.com/file/d/1iYRN9jrnDqcnpMa_fw-wv3eIrUS_jwHK/view?usp=sharing)
+
 
 
 
