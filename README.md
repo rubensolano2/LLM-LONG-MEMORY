@@ -83,10 +83,10 @@ These refined improvements represent exciting steps towards expanding the projec
 - 📚 Required Python packages: `openai`, `keyboard`, `sounddevice`, `scipy`, `pygame`, `numpy`, `sklearn`
 
 ## 🔧 Installation
-1️⃣ Clone the repository  
-2️⃣ Install dependencies  
-3️⃣ Create in your directory the `claves.py` file with your Neo4j, ElevenLabs and OpenAI API keys 
-4️⃣ Run the main script  
+1. Clone the repository  
+2. Install dependencies  
+3. Create in your directory the `claves.py` file with your Neo4j, ElevenLabs and OpenAI API keys 
+4. Run the main script  
 
 ## 🎯 Usage
 To initiate Vera, use the hotkey `Ctrl + Alt`. Speak into the microphone, and Vera will respond contextually based on past conversations and the current query.
