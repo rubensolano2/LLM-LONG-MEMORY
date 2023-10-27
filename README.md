@@ -16,23 +16,32 @@
 ## 🌐 Introduction- project under construction
 Vera is a context-aware virtual assistant powered by OpenAI's GPT-4 and other advanced technologies. Unlike traditional virtual assistants, Vera stores conversations in a Neo4j database and uses this stored data to provide contextually relevant responses.
 
-## 🐞 Problems to Solve
+## 🐞  Beta Version of Conversational Assistant Software
 
-### Model Similarity Matching Failure
+1. Voice Interaction:
 
-The model currently faces a challenge in accurately identifying similarity between nodes and the query, which is critical for providing contextually relevant responses. Efforts are ongoing to address this issue and improve the model's accuracy in similarity matching.
+The software is capable of recording audio inputs, transcribing them to text using OpenAI, and generating voice responses through Elevenlabs API.
+Utilizes an ultra-realistic synthetic voice for responses, enhancing the user interaction experience.
+A queue system is employed for managing audio playback, ensuring a smooth user interaction.
 
-#### Steps for resolution:
+2. Database Management:
 
-1. **Model Evaluation**: Conduct a thorough evaluation of the model to understand the root cause of the similarity matching failure.
-   
-2. **Model Improvement**: Explore and implement alternative models or optimization techniques to enhance similarity matching accuracy.
+Vera utilizes Neo4j as a database to chronicle and retrieve conversation data.
+Supports the initiation, storage, and retrieval of conversations, which is pivotal for maintaining a coherent and context-aware interaction over time.
 
-3. **Testing and Validation**: Perform extensive testing to validate the improvements and ensure that the similarity matching issue has been resolved.
+3. Context Awareness:
 
-4. **Community Contributions**: Encourage community contributions by providing detailed information about the issue and inviting suggestions or solutions through [Issues](https://github.com/rubensolano2/LLM-LONG-MEMORY/issues) or [Pull Requests](https://github.com/rubensolano2/LLM-LONG-MEMORY/pulls).
+Aims for context-awareness by preserving past conversations and utilizing this data to shape future responses.
+The current beta adopts a basic approach to context retrieval; further development is targeted to augment this facet for more precise context-aware responses.
 
-Any contribution to help resolve these issues is very welcome. If you have any suggestions or solutions, feel free to open a [new Issue](https://github.com/rubensolano2/LLM-LONG-MEMORY/issues) or submit a [Pull Request](https://github.com/rubensolano2/LLM-LONG-MEMORY/pulls).
+4. Hotkey Activation:
+
+Incorporates a hotkey activation mechanism for triggering the conversation, allowing user engagement at any given moment.
+
+5. Advanced Language Models:
+
+Utilizes state-of-the-art language models, leveraging powerful LLM (Language Model) technologies available in the market to ensure high-quality text generation and understanding.
+
 
 
 
