@@ -23,12 +23,23 @@ from collections import defaultdict
 from claves import Openai_clave, Elevenlabs_clave
 from math import ceil
 from sentence_transformers import SentenceTransformer, util
-
+import time
 openai.api_key = Openai_clave
 
 #nltk.download('punkt')# descomenta si es la primera vez que lo usas
 audio_counter = 0
 audio_queue = []
+
+
+
+# Obtiene la hora local
+tiempo_local = time.localtime()
+
+# Formatea la hora local en una cadena
+cadena_tiempo = time.strftime("%Y-%m-%d %H:%M:%S", tiempo_local)
+
+
+
 
 import pydub
 
@@ -61,7 +72,7 @@ thread = None
 conversation = [
     {
         "role": "system",
-        "content": "Te llamas Vera, te he conectado a una base de datos es tu memoria real para guardar recuerdos te los daré como pretexto y me ayudarás con todas mis dudas, con respuestas inteligentes, precisas para guardarlas como recuerdos y elecuentes, además de darles tu toque de personalidad con elgancia y lenguaje que sea mono de escuchar y conciso:"
+        "content": "Te llamas Vera, te he conectado a una base de datos es tu memoria real para guardar recuerdos te los daré como pretexto y me ayudarás con todas mis dudas, con respuestas inteligentes y técnicas:"
     }
 ]
 
@@ -288,7 +299,7 @@ def registrar_conversacion(fecha_inicio, sentimiento, contenido_vera,base_de_dat
 
 def on_macro():
     global recording, buffer,text_audio, thread, audio_counter, conversation  # Añade 'conversation' aquí
-    # Reinicia la variable 'conversation' a su estado original
+    # Reinicia la variable 'conversation' a su est/ado original
     conversation = [
         {
             "role": "system",
@@ -316,7 +327,7 @@ def on_macro():
 
         text_audio = transcribe(audio_path)
         contex = obtener_contexto(text_audio)  # Obtén el contexto basado en la transcripción
-        text = text_audio + (f"Este es el contexto de la base de datos, recuerda son memorias:{contex}, prioriza tu contexto:")
+        text = text_audio + (f"Hoy es:{cadena_tiempo}Este es el contexto de la base de datos, recuerda son memorias:{contex}, prioriza tu contexto, y si no tiene nada que ver con la consulta ni lo menciones:")
         message = chat_gpt([{"role": "user", "content": text}])
 
         conversation.append({"role": "assistant", "content": message})
