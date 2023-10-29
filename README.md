@@ -1,6 +1,6 @@
 ## 📚 Table of Contents 📚
 - [🌐 Introduction](#-introduction)
-- [🐞 Problems to Solve](#-problems-to-solve)
+- [🐞 Beta Version of Conversational Assistant Software](#-Beta-Version-of-Conversational-Assistant-Software)
 - [🎬 Demo](#-demo)
 - [🚀 Anticipated Updates for the Project](#-anticipated-updates-for-the-project)
 - [✨ Features](#-features)
