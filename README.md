@@ -128,6 +128,7 @@ Vera's database has a `Conversacion` node with properties like `fecha_inicio`, `
 - 📡 Persistent database connection: Currently, the database connection is initialized and closed each time the `obtener_contexto` function is called. This could be optimized by maintaining a single open connection or utilizing a shared connection.
 
 ## 🧪 Experiment of Consciousness
+(This experiment is particularly ambitious and will be carried out only after the successful implementation of short-term memory and temporal perception features in the language model. These advancements will serve as key enablers for the experiment)
 
 This experiment aims to explore the frontier of artificial consciousness by coupling two separate instances of the language model and enabling them to interact with each other. The uniqueness of this experiment lies in the initial conditions set for both instances. Unlike regular setups where a model has access to a database or previous interactions, these instances will start with a "blank slate," having only the context of their existence and current state as their first memory.
 
