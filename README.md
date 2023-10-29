@@ -75,7 +75,11 @@ The functionality of thematizing conversations will be introduced, allowing to m
 ## 5. 🧠 Short-Term Memory in Conversations
 A short-term memory feature will be implemented to remember the context of the current conversation between requests. This will allow for a more seamless and relevant interaction, enabling the system to recall previous queries and statements within the same session. For example, if a user asks "Tell me about apples" and then says "How do they grow?", the system can provide a more contextual response without requiring the user to re-specify the subject.
 
+## 6. 📹 Computer Vision Recognition
+A new functionality for recognition through computer vision will be added both in the device and via webcam. This system will be capable of recognizing people and objects shown to it, allowing for richer and more contextual interactions.
+
 These refined improvements represent exciting steps towards expanding the project's capabilities. Thank you for contributing to the evolution of this project! 😄
+
 
 
 ---
