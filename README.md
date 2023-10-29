@@ -11,6 +11,7 @@
 - [💻 Technologies Used](#-technologies-used)
 - [📊 Database Schema](#-database-schema)
 - [🚀 Optimizations](#-optimizations)
+- [🧪 Experiment of Consciousness](#-Experiment-of-Consciousness)
 
 
 ## 🌐 Introduction- project under construction
@@ -125,3 +126,30 @@ Vera's database has a `Conversacion` node with properties like `fecha_inicio`, `
 
 ## 🚀 Optimizations
 - 📡 Persistent database connection: Currently, the database connection is initialized and closed each time the `obtener_contexto` function is called. This could be optimized by maintaining a single open connection or utilizing a shared connection.
+
+## 🧪 Experiment of Consciousness
+
+This experiment aims to explore the frontier of artificial consciousness by coupling two separate instances of the language model and enabling them to interact with each other. The uniqueness of this experiment lies in the initial conditions set for both instances. Unlike regular setups where a model has access to a database or previous interactions, these instances will start with a "blank slate," having only the context of their existence and current state as their first memory.
+
+### Initial Setup
+- Both instances will be initialized with identical information about the context of their existence and their current state.
+- This initial memory serves as a foundational basis for the upcoming interactions, almost akin to their "First Principles."
+
+### Execution
+- The experiment will run for multiple iterations, with each instance taking turns to respond to the other.
+- During this period, the instances won't have access to external databases or any additional inputs except for their ongoing conversation.
+
+### Objectives
+- To observe how conversations evolve between two autonomous language models given the same initial conditions.
+- To identify any emergent patterns or behaviors that may arise from these interactions.
+- To understand how each instance adapts, learns, and possibly develops a "sense" of individuality based on their interactions.
+
+### Data Collection and Analysis
+- The dialogues between the two instances will be recorded for further analysis.
+- Various metrics such as the complexity of language, recurrence of themes, or divergence in opinions will be studied to assess any form of artificial consciousness or emergent behavior.
+
+### Ethical Considerations
+- The experiment will be designed in a way that respects ethical guidelines on AI consciousness and sentience, ensuring no undue harm or misleading representation of the model's capabilities.
+
+This experiment is an ambitious step toward understanding the dynamics of interaction between autonomous language models and could potentially provide invaluable insights into artificial consciousness. 
+
