@@ -1,6 +1,6 @@
 ## 📚 Table of Contents 📚
 - [🌐 Introduction](#-introduction)
-- [🐞 Beta Version of Conversational Assistant Software](#-Beta-Version-of-Conversational-Assistant-Software)
+- [🐞 Beta Version of Conversational Assistant Software](https://github.com/rubensolano2/LLM-LONG-MEMORY/blob/main/README.md#--beta-version-of-conversational-assistant-software)
 - [🎬 Demo](#-demo)
 - [🚀 Anticipated Updates for the Project](#-anticipated-updates-for-the-project)
 - [✨ Features](#-features)
