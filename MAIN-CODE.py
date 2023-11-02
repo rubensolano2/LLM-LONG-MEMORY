@@ -16,7 +16,7 @@ from collections import defaultdict
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
 from elevenlabs import generate, VoiceSettings
-from memoria import vera_db_manager
+from memory import vera_db_manager
 import os
 from algoritmo_de_busqueda import TextComparer
 from collections import defaultdict
