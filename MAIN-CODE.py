@@ -18,7 +18,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from elevenlabs import generate, VoiceSettings
 from memory import vera_db_manager
 import os
-from algoritmo_de_busqueda import TextComparer
+from search_algorithm import TextComparer
 from collections import defaultdict
 from claves import Openai_clave, Elevenlabs_clave
 from math import ceil

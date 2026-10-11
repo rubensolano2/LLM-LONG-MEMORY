@@ -1,0 +1,8 @@
+claves.py
+.env
+.env.*
+.venv/
+__pycache__/
+*.py[cod]
+*.wav
+*.mp3
